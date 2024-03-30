@@ -6,13 +6,7 @@ if (isset($_GET["action"]) && $_GET["action"] == "delete-employee" && isset($_GE
     $query -> execute([$_GET["id"]]);
 }
 
-if (isset($_GET["modify"]) && $_GET["modify"] == "modify-employee" && isset($_GET["id"])) {
-    $lastname = $_GET["lastname"];
-    $firstname = $_GET["firstname"];
-    $email = $_GET["em"];
-    $query = $conn -> prepare("UPDATE employees SET lastName=$lastname , firstName=$firstname email=$email WHERE employeeNumber=?");
-    $query -> execute([ $lastname, $firstname, $email, $_GET["id"]]);
-}
+
 
 
 // $code ="1002";
@@ -46,23 +40,20 @@ if (isset($_GET["modify"]) && $_GET["modify"] == "modify-employee" && isset($_GE
     <tbody>
         <?php
             $query = $conn -> query("SELECT * from employees LIMIT 20");
-            $rows = $query -> fetchAll(); foreach($rows as $row): ?>
-        <form action="" method="GET">
+            $rows = $query -> fetchAll();
+            foreach($rows as $row): ?>
+        <form action="formul.php" method="POST">
             <tr>
                 <td><?= $row["firstName"]; ?></td>
                 <td><?= $row["lastName"]; ?></td>
                 <td><?= $row["email"]; ?></td>
                 <td>
-                    <form action="formul.php" method="GET">
-                        <button value="modify-employee" name="modify">modifier</button>
-                        <input type="hidden" name="lastname" value="<?= $_GET["lName"]?>">
-                        <input type="hidden" name="firstname" value="<?= $_GET["fName"]?>">
-                        <input type="hidden" name="em" value="<?= $_GET["eml"]?>">
-                        <input type="hidden" name="id" value="<?= $row["employeeNumber"]?>">
-                    </form>
-                    <button type="submit" name="action" value="delete-employee">suprimer</button>
+                    <button value="modify-employee" name="modify">modifier</button>
                     <input type="hidden" name="id" value="<?= $row["employeeNumber"]?>">
+                    <!-- <button type="submit" name="action" value="delete-employee">suprimer</button> -->
                 </td>
+                    
+                    
             </tr>
         </form>
         <?php endforeach; ?>
