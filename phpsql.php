@@ -42,17 +42,22 @@ if (isset($_GET["action"]) && $_GET["action"] == "delete-employee" && isset($_GE
             $query = $conn -> query("SELECT * from employees LIMIT 20");
             $rows = $query -> fetchAll();
             foreach($rows as $row): ?>
-        <form action="formul.php" method="POST">
             <tr>
                 <td><?= $row["firstName"]; ?></td>
                 <td><?= $row["lastName"]; ?></td>
                 <td><?= $row["email"]; ?></td>
                 <td>
-                    <button value="modify-employee" name="modify">modifier</button>
-                    <input type="hidden" name="id" value="<?= $row["employeeNumber"]?>">
-                    <!-- <button type="submit" name="action" value="delete-employee">suprimer</button> -->
+                    <form action="formul.php" method="GET">
+                        <button value="modify-employee" name="modify">modifier</button>
+                        <input type="hidden" name="id" value="<?= $row["employeeNumber"]?>">
+                    </form>
                 </td>
-                    
+                <td>
+                    <form action="" method="GET">
+                        <button type="submit" name="action" value="delete-employee">suprimer</button>
+                        <input type="hidden" name="id" value="<?= $row["employeeNumber"]?>">
+                    </form>
+                </td>
                     
             </tr>
         </form>
